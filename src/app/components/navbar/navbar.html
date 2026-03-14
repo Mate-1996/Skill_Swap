@@ -1,0 +1,18 @@
+<nav class="navbar">
+  <a routerLink="/" class="navbar-brand">SkillSwap</a>
+  <div class="navbar-menu">
+    <a routerLink="/jobs" routerLinkActive="active" class="nav-link">Browse Jobs</a>
+
+    <ng-container *ngIf="isLoggedIn">
+      <a routerLink="/jobs/new" routerLinkActive="active" class="nav-link">Post Job</a>
+      <a routerLink="/my-postings" routerLinkActive="active" class="nav-link">My Postings</a>
+      <a routerLink="/my-bids" routerLinkActive="active" class="nav-link">My Bids</a>
+      <button (click)="logout()" class="nav-link btn-logout">Logout</button>
+    </ng-container>
+
+    <ng-container *ngIf="!isLoggedIn">
+      <a routerLink="/login" routerLinkActive="active" class="nav-link">Login</a>
+      <a routerLink="/signup" routerLinkActive="active" class="nav-link">Sign Up</a>
+    </ng-container>
+  </div>
+</nav>

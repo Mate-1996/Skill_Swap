@@ -1,0 +1,83 @@
+:host {
+  display: block;
+}
+
+.hero {
+  text-align: center;
+  padding: 80px 24px;
+  background: linear-gradient(135deg, rgb(241, 6, 241), rgb(5, 65, 216));
+  color: #fff;
+
+  h1 {
+    font-size: 40px;
+    margin-bottom: 16px;
+  }
+
+  p {
+    font-size: 18px;
+    color: #d1d5db;
+    margin-bottom: 32px;
+  }
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.btn {
+  padding: 12px 28px;
+  border-radius: 6px;
+  font-size: 16px;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background: rgb(11, 11, 11);
+  color: #fff;
+
+  &:hover {
+    background: rgb(77, 77, 77);
+  }
+}
+
+.btn-secondary {
+  background: #fff;
+  color: rgb(17, 24, 39);
+
+  &:hover {
+    background: #e5e7eb;
+  }
+}
+
+.stats-section {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  padding: 48px 24px;
+  background: #f9fafb;
+  flex-wrap: wrap;
+}
+
+.stat-card {
+  background: #fff;
+  padding: 24px 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  text-align: center;
+
+  h3 {
+    font-size: 36px;
+    margin: 0 0 8px;
+    color: rgb(0, 0, 0);
+  }
+
+  p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+  }
+}

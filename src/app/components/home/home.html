@@ -1,0 +1,21 @@
+<div class="hero">
+  <h1>Find the right freelancer for any job</h1>
+  <div class="hero-actions">
+    <a routerLink="/jobs" class="btn btn-primary">Browse Jobs</a>
+  </div>
+</div>
+
+<div class="stats-section" *ngIf="stats">
+  <div class="stat-card">
+    <h3>{{ stats.total_users }}</h3>
+    <p>Total Users</p>
+  </div>
+  <div class="stat-card">
+    <h3>{{ stats.active_jobs }}</h3>
+    <p>Active Jobs</p>
+  </div>
+  <div class="stat-card">
+    <h3>${{ stats.total_value_moved }}</h3>
+    <p>Total Value Moved</p>
+  </div>
+</div>
