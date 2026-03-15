@@ -2,12 +2,16 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home';
 import { LoginComponent } from './components/login/login';
 import { SignupComponent } from './components/signup/signup';
+import { PostJobComponent } from './components/post-job/post-job';
+import { authGuard } from './guards/auth.guard';
 import { JobsListingComponent } from './components/jobs-listing/jobs-listing';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
+  { path: '**', redirectTo: '' },
+  {path:'post-job', component: PostJobComponent, canActivate: [authGuard] },
   { path: 'jobs', component: JobsListingComponent },
   { path: '**', redirectTo: '' }
   
