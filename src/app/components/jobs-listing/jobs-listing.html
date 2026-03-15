@@ -1,0 +1,45 @@
+<div class="page-container">
+  <div class="page-header">
+    <h1>Browse Jobs</h1>
+    <a routerLink="/jobs/new" class="btn btn-primary">Post a Job</a>
+  </div>
+
+  <div class="filters">
+    <input
+      [(ngModel)]="filterCategory"
+      name="filterCategory"
+      type="text"
+      placeholder="Category"
+    />
+    <input
+      [(ngModel)]="filterMinBudget"
+      name="filterMinBudget"
+      type="number"
+      placeholder="Min Budget"
+    />
+    <button (click)="applyFilters()" class="btn btn-primary">Search</button>
+    <button (click)="clearFilters()" class="btn btn-secondary">Clear</button>
+  </div>
+
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+  <div *ngIf="jobs.length === 0 && !errorMessage" class="empty">
+    No jobs found.
+  </div>
+
+  <div class="job-list">
+    <div *ngFor="let job of jobs" class="job-card">
+      <div class="card-content">
+        <div class="card-top">
+          <h3>{{ job.title }}</h3>
+          <span class="badge">{{ job.category }}</span>
+        </div>
+        <p class="description">{{ job.description }}</p>
+        <p class="budget">Budget: ${{ job.budget }}</p>
+      </div>
+      <div class="card-actions">
+        <a [routerLink]="['/jobs', job.id]" class="btn btn-primary">View Details</a>
+      </div>
+    </div>
+  </div>
+</div>
