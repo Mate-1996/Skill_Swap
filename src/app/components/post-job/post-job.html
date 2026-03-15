@@ -1,0 +1,57 @@
+<!-- post-job.html -->
+<div class="post-job-container">
+  <h1>Post a New Job</h1>
+
+  
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <form (ngSubmit)="submit()">
+    <div>
+      <label>Job Title</label>
+      <input 
+        [(ngModel)]="form.title" 
+        name="title" 
+        placeholder="e.g., Build a website" 
+        required
+        [disabled]="isSubmitting"
+      />
+    </div>
+
+    <div>
+      <label>Description</label>
+      <textarea 
+        [(ngModel)]="form.description" 
+        name="description" 
+        placeholder="Describe the job in detail" 
+        required
+        [disabled]="isSubmitting"
+      ></textarea>
+    </div>
+
+    <div>
+      <label>Budget</label>
+      <input 
+        [(ngModel)]="form.budget" 
+        name="budget" 
+        type="number" 
+        placeholder="e.g., 500" 
+        required
+        [disabled]="isSubmitting"
+      />
+    </div>
+
+    <div>
+      <label>Category</label>
+      <select [(ngModel)]="form.category" name="category" required [disabled]="isSubmitting">
+        <option value="">Select a category</option>
+        <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+      </select>
+    </div>
+
+    <button type="submit" [disabled]="isSubmitting">
+      {{ isSubmitting ? 'Creating...' : 'Post Job' }}
+    </button>
+  </form>
+</div>
