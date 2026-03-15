@@ -55,4 +55,8 @@ export class AuthService {
   clearToken(): void {
     localStorage.removeItem('token');
   }
+
+   getCurrentUser(): Observable<any> {
+    return this.http.get<any>(`${this.BASE_URL}/users/me`); 
+  }
 }
