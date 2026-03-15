@@ -1,0 +1,74 @@
+<!-- job-details.html -->
+<div class="job-details-container" *ngIf="!isLoading">
+  
+  
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Job info from REAL API response -->
+  <div *ngIf="job" class="job-info">
+    <h1>{{ job.title }}</h1>
+    <p>{{ job.description }}</p>
+    <p class="budget">Budget: ${{ job.budget }}</p>
+    <p class="category">Category: {{ job.category }}</p>
+    <p class="status">Status: {{ job.status }}</p>
+
+    <!-- Client info -->
+    <div class="client-card">
+      <h3>{{ job.owner.name }}</h3>
+      <p>@{{ job.owner.username }}</p>
+      <p>Rating: ⭐ {{ job.owner.rating_avg }}</p>
+    </div>
+
+    
+    <div *ngIf="isJobOwner" class="proposals-section">
+      <h2>Proposals ({{ proposals.length }})</h2>
+      <div *ngFor="let proposal of proposals" class="proposal-card">
+        <p><strong>{{ proposal.freelancer.name }}</strong></p>
+        <p>Price: ${{ proposal.price }}</p>
+        <p>Status: {{ proposal.status }}</p>
+        <button *ngIf="proposal.status === 'pending'" (click)="acceptProposal(proposal.id)">
+          Accept
+        </button>
+      </div>
+    </div>
+
+    
+    <div *ngIf="!isJobOwner && job.status === 'open'" class="submit-proposal">
+      <h2>Submit Your Proposal</h2>
+      <input [(ngModel)]="proposalForm.price" type="number" placeholder="Your price" />
+      <textarea [(ngModel)]="proposalForm.cover_letter" placeholder="Cover letter"></textarea>
+      <button (click)="submitProposal()" [disabled]="isSubmittingProposal">
+        {{ isSubmittingProposal ? 'Submitting...' : 'Submit Proposal' }}
+      </button>
+    </div>
+
+    <!-- If job is in_progress, show complete button -->
+    <div *ngIf="job.status === 'in_progress' && (isJobOwner || currentUserId === job.freelancer?.id)">
+      <button (click)="completeJob()" [disabled]="isCompleting">
+        {{ isCompleting ? 'Completing...' : 'Mark as Completed' }}
+      </button>
+    </div>
+
+    
+    <div *ngIf="job.status === 'completed' && showReviewForm" class="review-section">
+      <h2>Leave a Review</h2>
+      <select [(ngModel)]="reviewForm.rating">
+        <option value="">Select rating</option>
+        <option value="1">⭐ 1 - Poor</option>
+        <option value="2">⭐ 2 - Fair</option>
+        <option value="3">⭐ 3 - Good</option>
+        <option value="4">⭐ 4 - Very Good</option>
+        <option value="5">⭐ 5 - Excellent</option>
+      </select>
+      <textarea [(ngModel)]="reviewForm.comment" placeholder="Your comment"></textarea>
+      <button (click)="submitReview()" [disabled]="isSubmittingReview">
+        {{ isSubmittingReview ? 'Submitting...' : 'Submit Review' }}
+      </button>
+    </div>
+  </div>
+
+  
+  <div *ngIf="isLoading" class="loading">Loading job details...</div>
+</div>
