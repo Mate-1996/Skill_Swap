@@ -4,7 +4,7 @@
     <a routerLink="/jobs" routerLinkActive="active" class="nav-link">Browse Jobs</a>
 
     <ng-container *ngIf="isLoggedIn">
-      <a routerLink="/jobs/new" routerLinkActive="active" class="nav-link">Post Job</a>
+      <a routerLink="/post-job" routerLinkActive="active" class="nav-link">Post Job</a>
       <a routerLink="/my-postings" routerLinkActive="active" class="nav-link">My Postings</a>
       <a routerLink="/my-bids" routerLinkActive="active" class="nav-link">My Bids</a>
       <button (click)="logout()" class="nav-link btn-logout">Logout</button>

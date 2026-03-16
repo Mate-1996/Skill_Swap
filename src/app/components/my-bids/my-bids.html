@@ -1,0 +1,33 @@
+<div class="page-container">
+  <div class="page-header">
+    <h1>My Bids</h1>
+  </div>
+
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+  <div *ngIf="proposals.length === 0 && !errorMessage" class="empty">
+    You haven't submitted any proposals yet.
+  </div>
+
+  <div class="proposal-list">
+    <div *ngFor="let p of proposals" class="proposal-card">
+      <div class="card-content">
+        <div class="card-top">
+          <h3 *ngIf="p.job">{{ p.job.title }}</h3>
+          <span class="status-badge status-{{ p.status }}">{{ p.status }}</span>
+        </div>
+        <p class="cover-letter">{{ p.cover_letter }}</p>
+        <p class="price">Your bid: ${{ p.price }}</p>
+      </div>
+      <div class="card-actions">
+        <a [routerLink]="['/jobs', p.job_id]" class="btn btn-primary">View Job</a>
+        <button
+          *ngIf="p.status === 'pending'"
+          (click)="withdraw(p.id)"
+          class="btn btn-danger"
+        >
+          Withdraw
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,96 @@
+:host {
+  display: block;
+  padding: 24px;
+  background: #f4f6f8;
+  min-height: 100vh;
+}
+
+.page-container { max-width: 700px; margin: 0 auto; }
+
+.profile-card {
+  background: #fff;
+  padding: 32px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+  align-items: flex-start;
+}
+
+.profile-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgb(67, 56, 202);
+  color: #fff;
+  font-size: 32px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.profile-info {
+  flex: 1;
+  h1 { margin: 0 0 4px; font-size: 24px; color: #111827; }
+}
+
+.username { color: #6b7280; font-size: 14px; margin: 0 0 10px; }
+.bio { color: #374151; font-size: 15px; margin: 0 0 16px; line-height: 1.5; }
+
+.stats {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 16px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-value { font-size: 22px; font-weight: 700; color: rgb(67, 56, 202); }
+.stat-label { font-size: 12px; color: #6b7280; }
+
+.skills { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.skill-tag {
+  padding: 4px 12px;
+  background: #e0e7ff;
+  color: rgb(67, 56, 202);
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.reviews-section {
+  background: #fff;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  h2 { margin: 0 0 16px; font-size: 20px; color: #111827; }
+}
+
+.review-card {
+  border-top: 1px solid #e5e7eb;
+  padding: 16px 0;
+  &:first-of-type { border-top: none; padding-top: 0; }
+}
+
+.review-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.star { color: #d1d5db; font-size: 18px; }
+.star.filled { color: #f59e0b; }
+.review-date { font-size: 12px; color: #9ca3af; }
+.review-comment { color: #374151; font-size: 14px; margin: 0; line-height: 1.5; }
+
+.error { color: red; margin-bottom: 16px; }
+.empty { color: #9ca3af; font-size: 14px; }
