@@ -47,7 +47,7 @@ export class PostJobComponent {
     }).subscribe({
       next: (response) => {
         // response = created job object
-        this.router.navigate(['/my-jobs']);
+        this.router.navigate(['/jobs']);
       },
       error: (err) => {
         // Real API errors: missing fields, validation errors

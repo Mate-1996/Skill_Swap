@@ -1,0 +1,86 @@
+:host {
+  display: block;
+  padding: 24px;
+  background: #f4f6f8;
+  min-height: 100vh;
+}
+
+.page-container { max-width: 900px; margin: 0 auto; }
+
+.page-header {
+  margin-bottom: 24px;
+  h1 { margin: 0; font-size: 28px; color: #111827; }
+}
+
+.proposal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.proposal-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.card-content { flex: 1; }
+
+.card-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  h3 { margin: 0; font-size: 18px; color: #111827; }
+}
+
+.status-badge {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-pending { background: #fef3c7; color: #92400e; }
+.status-accepted { background: #d1fae5; color: #065f46; }
+.status-rejected { background: #fee2e2; color: #991b1b; }
+
+.cover-letter { color: #374151; font-size: 14px; margin: 0 0 8px; line-height: 1.5; }
+.price { font-weight: 700; color: rgb(67, 56, 202); font-size: 15px; margin: 0; }
+
+.card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.btn {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: rgb(67, 56, 202);
+  color: #fff;
+  &:hover { background: rgb(49, 40, 170); }
+}
+
+.btn-danger {
+  background: #fee2e2;
+  color: #991b1b;
+  &:hover { background: #fecaca; }
+}
+
+.error { color: red; margin-bottom: 16px; }
+.empty { text-align: center; color: #9ca3af; padding: 40px 0; font-size: 16px; }

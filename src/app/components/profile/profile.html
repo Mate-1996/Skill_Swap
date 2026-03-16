@@ -1,0 +1,41 @@
+<div class="page-container">
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+  <div *ngIf="user">
+    <div class="profile-card">
+      <div class="profile-avatar">{{ user.name.charAt(0).toUpperCase() }}</div>
+      <div class="profile-info">
+        <h1>{{ user.name }}</h1>
+        <p class="username">@{{ user.username }}</p>
+        <p class="bio">{{ user.bio }}</p>
+        <div class="stats">
+          <div class="stat">
+            <span class="stat-value">{{ user.completed_jobs }}</span>
+            <span class="stat-label">Jobs Completed</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">{{ user.rating_avg }}</span>
+            <span class="stat-label">Avg Rating</span>
+          </div>
+        </div>
+        <div class="skills" *ngIf="user.skills && user.skills.length > 0">
+          <span *ngFor="let skill of user.skills" class="skill-tag">{{ skill }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="reviews-section">
+      <h2>Reviews ({{ reviews.length }})</h2>
+      <div *ngIf="reviews.length === 0" class="empty">No reviews yet.</div>
+      <div *ngFor="let r of reviews" class="review-card">
+        <div class="review-top">
+          <span class="stars">
+            <span *ngFor="let s of [1,2,3,4,5]" class="star" [class.filled]="s <= r.rating">★</span>
+          </span>
+          <span class="review-date">{{ r.created_at | date: 'mediumDate' }}</span>
+        </div>
+        <p class="review-comment" *ngIf="r.comment">{{ r.comment }}</p>
+      </div>
+    </div>
+  </div>
+</div>
