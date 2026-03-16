@@ -1,135 +1,49 @@
-<!-- post-job.component.html -->
-<div class="card">
+<div class="post-job-container">
+  <h1>Post a New Job</h1>
 
-  <!-- Form View -->
-  <div id="formView" *ngIf="!submitted">
-    <h1>Post a Job</h1>
-    <p class="subtitle">Fill in the details and reach the right people fast.</p>
-
-    <div class="progress-bar">
-      <div class="progress-fill" [style.width]="progressWidth + '%'"></div>
-    </div>
-
-    <div class="form">
-
-      <!-- Job Title -->
-      <div class="field">
-        <label for="title">
-          Job Title
-          <span class="char-count" [class.warn]="form.title.length > 72" [class.over]="form.title.length >= 80">
-            {{ form.title.length }} / 80
-          </span>
-        </label>
-        <input
-          id="title"
-          [(ngModel)]="form.title"
-          name="title"
-          placeholder="e.g., Build a responsive website"
-          maxlength="80"
-          [disabled]="isSubmitting"
-          [class.error]="errors.title"
-          (input)="updateProgress()"
-          (blur)="validateField('title')"
-        />
-        <span class="err-msg" *ngIf="errors.title">Please enter a job title.</span>
-        <div class="tags">
-          <span class="tag" (click)="fillTitle('Build a mobile app')">Build a mobile app</span>
-          <span class="tag" (click)="fillTitle('Design a logo')">Design a logo</span>
-          <span class="tag" (click)="fillTitle('Write website copy')">Write website copy</span>
-          <span class="tag" (click)="fillTitle('Fix a bug')">Fix a bug</span>
-        </div>
-      </div>
-
-      <!-- Description -->
-      <div class="field">
-        <label for="desc">
-          Description
-          <span class="char-count" [class.warn]="form.description.length > 450" [class.over]="form.description.length >= 500">
-            {{ form.description.length }} / 500
-          </span>
-        </label>
-        <textarea
-          id="desc"
-          [(ngModel)]="form.description"
-          name="description"
-          placeholder="Describe the scope, deliverables, and requirements…"
-          maxlength="500"
-          [disabled]="isSubmitting"
-          [class.error]="errors.description"
-          (input)="updateProgress()"
-          (blur)="validateField('description')"
-        ></textarea>
-        <span class="err-msg" *ngIf="errors.description">Please add a description.</span>
-      </div>
-
-      <!-- Budget + Category -->
-      <div class="field-row">
-        <div class="field">
-          <label for="budget">Budget</label>
-          <div class="prefix-wrap">
-            <span class="prefix">$</span>
-            <input
-              id="budget"
-              [(ngModel)]="form.budget"
-              name="budget"
-              type="number"
-              placeholder="0"
-              min="0"
-              [disabled]="isSubmitting"
-              [class.error]="errors.budget"
-              (input)="updateProgress()"
-              (blur)="validateField('budget')"
-            />
-          </div>
-          <span class="err-msg" *ngIf="errors.budget">Enter a valid budget.</span>
-        </div>
-
-        <div class="field">
-          <label for="category">Category</label>
-          <select
-            id="category"
-            [(ngModel)]="form.category"
-            name="category"
-            [disabled]="isSubmitting"
-            [class.error]="errors.category"
-            (change)="updateProgress()"
-          >
-            <option value="">Select a category</option>
-            <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
-          </select>
-          <span class="err-msg" *ngIf="errors.category">Please select a category.</span>
-        </div>
-      </div>
-
-      <!-- Footer -->
-      <div class="footer">
-        <span class="req-note">* All fields required</span>
-        <button class="btn" (click)="submit()" [disabled]="isSubmitting">
-          <span>{{ isSubmitting ? 'Posting…' : 'Post Job' }}</span>
-          <svg *ngIf="!isSubmitting" class="arrow" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"/>
-            <polyline points="12 5 19 12 12 19"/>
-          </svg>
-          <svg *ngIf="isSubmitting" class="spin" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-            <circle cx="12" cy="12" r="10" stroke-opacity=".2"/>
-            <path d="M12 2a10 10 0 0 1 10 10"/>
-          </svg>
-        </button>
-      </div>
-
-    </div>
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
   </div>
 
-  <!-- Success View -->
-  <div class="success" *ngIf="submitted">
-    <div class="check-circle">
-      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f26419" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="20 6 9 17 4 12"/>
-      </svg>
-    </div>
-    <h2>Job Posted!</h2>
-    <p>"{{ form.title }}" in {{ form.category }} — we'll notify matching freelancers right away.</p>
-    <button class="reset-btn" (click)="resetForm()">Post another job</button>
-  </div>
+  <form (ngSubmit)="submit()">
+    <label>
+      Job Title
+      <input
+        [(ngModel)]="form.title"
+        name="title"
+        type="text"
+        placeholder="Job Title"
+        [disabled]="isSubmitting"
+      />
+    </label>
+
+    <label>
+      Description
+      <textarea
+        [(ngModel)]="form.description"
+        name="description"
+        placeholder="Describe the job in detail"
+        [disabled]="isSubmitting"
+      ></textarea>
+    </label>
+
+    <label>
+      Budget ($)
+      <input
+        [(ngModel)]="form.budget"
+        name="budget"
+        type="number"
+        placeholder="Budget"
+        [disabled]="isSubmitting"
+      />
+    </label>
+
+    <label>
+      Category
+      <select [(ngModel)]="form.category" name="category" [disabled]="isSubmitting">
+        <option value="">Select a category</option>
+        <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+      </select>
+    </label>
 
 </div>

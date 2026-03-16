@@ -18,7 +18,7 @@ export class JobDetailsComponent implements OnInit {
   proposals: any[] = [];
   isLoading = true;
   errorMessage = '';
-  currentUserId: number | null = null;
+  currentUserId: string | null = null;
   isJobOwner = false;
 
   // For submitting proposal
@@ -52,6 +52,24 @@ export class JobDetailsComponent implements OnInit {
     this.getCurrentUser();
   }
 
+  getCurrentUser() {
+    const token = this.authService.getToken();
+    if (token) {
+      this.authService.getCurrentUser().subscribe({
+        next: (user: any) => {
+          this.currentUserId = String(user.id);
+          this.loadJob();
+        },
+        error: () => {
+          this.currentUserId = null;
+          this.loadJob();
+        }
+      });
+    } else {
+      this.loadJob();
+    }
+  }
+
   loadJob() {
     const jobId = this.route.snapshot.paramMap.get('id');
     if (!jobId) {
@@ -59,14 +77,12 @@ export class JobDetailsComponent implements OnInit {
       this.isLoading = false;
       return;
     }
-    
-    // Make REAL API call
+
     this.jobsService.getJobById(jobId).subscribe({
       next: (response) => {
         this.job = response;
-        this.isJobOwner = this.job.owner.id === this.currentUserId;
-        
-        // If I'm the owner, load proposals
+        this.isJobOwner = String(this.job.owner.id) === String(this.currentUserId);
+
         if (this.isJobOwner) {
           this.loadProposals(jobId);
         } else {
@@ -80,22 +96,6 @@ export class JobDetailsComponent implements OnInit {
     });
   }
 
-  getCurrentUser() { 
-    const token = this.authService.getToken();
-    if (token) { 
-      this.authService.getCurrentUser().subscribe({
-        next: (user: any) => {
-          this.currentUserId = user.id;
-          this.loadJob();
-        },
-        error: () => {
-      this.currentUserId = null;
-      this.loadJob();
-    }
-      });
-    }
-  }
-
   loadProposals(jobId: string) {
     this.proposalsService.getProposalsForJob(jobId).subscribe({
       next: (response) => {
@@ -103,7 +103,6 @@ export class JobDetailsComponent implements OnInit {
         this.isLoading = false;
       },
       error: (err) => {
-        // Real API error
         this.errorMessage = err.error?.error || 'Failed to load proposals';
         this.isLoading = false;
       }
@@ -117,14 +116,16 @@ export class JobDetailsComponent implements OnInit {
     }
 
     this.isSubmittingProposal = true;
+    this.errorMessage = '';
 
-    // Make REAL API call
     this.proposalsService.submitProposal(this.job.id, {
       price: Number(this.proposalForm.price),
       cover_letter: this.proposalForm.cover_letter
     }).subscribe({
-      next: (response) => {
-        this.router.navigate(['/my-proposals']);
+      next: () => {
+        this.isSubmittingProposal = false;
+        this.proposalForm = { price: '', cover_letter: '' };
+        alert('Proposal submitted successfully!');
       },
       error: (err) => {
         this.errorMessage = err.error?.error || 'Failed to submit proposal';
@@ -134,36 +135,34 @@ export class JobDetailsComponent implements OnInit {
   }
 
   acceptProposal(proposalId: number) {
-    if (confirm('Accept this proposal?')) {
-      // Make REAL API call
-      this.proposalsService.acceptProposal(proposalId).subscribe({
-        next: (response) => {
-          this.loadJob();
-        },
-        error: (err) => {
-          this.errorMessage = err.error?.error || 'Failed to accept proposal';
-        }
-      });
-    }
+    if (!confirm('Accept this proposal?')) return;
+
+    this.proposalsService.acceptProposal(proposalId).subscribe({
+      next: () => {
+        this.loadJob();
+      },
+      error: (err) => {
+        this.errorMessage = err.error?.error || 'Failed to accept proposal';
+      }
+    });
   }
 
   completeJob() {
-    if (confirm('Mark job as completed?')) {
-      this.isCompleting = true;
+    if (!confirm('Mark job as completed?')) return;
 
-      
-      this.jobsService.completeJob(this.job.id).subscribe({
-        next: (response) => {
-          this.job.status = 'completed';
-          this.showReviewForm = true;
-          this.isCompleting = false;
-        },
-        error: (err) => {
-          this.errorMessage = err.error?.error || 'Failed to complete job';
-          this.isCompleting = false;
-        }
-      });
-    }
+    this.isCompleting = true;
+
+    this.jobsService.completeJob(this.job.id).subscribe({
+      next: () => {
+        this.job.status = 'completed';
+        this.showReviewForm = true;
+        this.isCompleting = false;
+      },
+      error: (err) => {
+        this.errorMessage = err.error?.error || 'Failed to complete job';
+        this.isCompleting = false;
+      }
+    });
   }
 
   submitReview() {
@@ -173,20 +172,23 @@ export class JobDetailsComponent implements OnInit {
     }
 
     this.isSubmittingReview = true;
+    this.errorMessage = '';
 
-    // Make REAL API call
+    const targetId = this.isJobOwner
+      ? this.job.freelancer.id
+      : this.job.owner.id;
+
     this.reviewsService.submitReview(this.job.id, {
-      target_id: this.job.freelancer.id, // or job.owner.id
+      target_id: targetId,
       rating: Number(this.reviewForm.rating),
       comment: this.reviewForm.comment
     }).subscribe({
-      next: (response) => {
+      next: () => {
         this.showReviewForm = false;
-        alert('Review submitted!');
         this.isSubmittingReview = false;
+        alert('Review submitted successfully!');
       },
       error: (err) => {
-        // Real API errors: "Can't review yourself", "Already reviewed", etc.
         this.errorMessage = err.error?.error || 'Failed to submit review';
         this.isSubmittingReview = false;
       }

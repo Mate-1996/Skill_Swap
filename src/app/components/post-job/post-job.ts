@@ -1,4 +1,3 @@
-// post-job.ts
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -29,7 +28,6 @@ export class PostJobComponent {
   ) {}
 
   submit() {
-    // Validation
     if (!this.form.title || !this.form.description || !this.form.budget || !this.form.category) {
       this.errorMessage = 'All fields are required';
       return;
@@ -38,7 +36,6 @@ export class PostJobComponent {
     this.isSubmitting = true;
     this.errorMessage = '';
 
-    // Make REAL API call to POST /jobs
     this.jobsService.createJob({
       title: this.form.title,
       description: this.form.description,
@@ -46,11 +43,9 @@ export class PostJobComponent {
       category: this.form.category
     }).subscribe({
       next: (response) => {
-        // response = created job object
-        this.router.navigate(['/jobs']);
+        this.router.navigate(['/my-postings']);
       },
       error: (err) => {
-        // Real API errors: missing fields, validation errors
         this.errorMessage = err.error?.error || 'Failed to create job';
         this.isSubmitting = false;
       }
