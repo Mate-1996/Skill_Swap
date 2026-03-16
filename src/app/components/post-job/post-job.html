@@ -1,54 +1,50 @@
-<!-- post-job.html -->
 <div class="post-job-container">
   <h1>Post a New Job</h1>
 
-  
   <div *ngIf="errorMessage" class="error-message">
     {{ errorMessage }}
   </div>
 
   <form (ngSubmit)="submit()">
-    <div>
-      <label>Job Title</label>
-      <input 
-        [(ngModel)]="form.title" 
-        name="title" 
-        placeholder="e.g., Build a website" 
-        required
+    <label>
+      Job Title
+      <input
+        [(ngModel)]="form.title"
+        name="title"
+        type="text"
+        placeholder="Job Title"
         [disabled]="isSubmitting"
       />
-    </div>
+    </label>
 
-    <div>
-      <label>Description</label>
-      <textarea 
-        [(ngModel)]="form.description" 
-        name="description" 
-        placeholder="Describe the job in detail" 
-        required
+    <label>
+      Description
+      <textarea
+        [(ngModel)]="form.description"
+        name="description"
+        placeholder="Describe the job in detail"
         [disabled]="isSubmitting"
       ></textarea>
-    </div>
+    </label>
 
-    <div>
-      <label>Budget</label>
-      <input 
-        [(ngModel)]="form.budget" 
-        name="budget" 
-        type="number" 
-        placeholder="e.g., 500" 
-        required
+    <label>
+      Budget ($)
+      <input
+        [(ngModel)]="form.budget"
+        name="budget"
+        type="number"
+        placeholder="Budget"
         [disabled]="isSubmitting"
       />
-    </div>
+    </label>
 
-    <div>
-      <label>Category</label>
-      <select [(ngModel)]="form.category" name="category" required [disabled]="isSubmitting">
+    <label>
+      Category
+      <select [(ngModel)]="form.category" name="category" [disabled]="isSubmitting">
         <option value="">Select a category</option>
         <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
       </select>
-    </div>
+    </label>
 
     <button type="submit" [disabled]="isSubmitting">
       {{ isSubmitting ? 'Creating...' : 'Post Job' }}

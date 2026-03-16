@@ -25,7 +25,7 @@
     <div *ngIf="isJobOwner" class="proposals-section">
       <h2>Proposals ({{ proposals.length }})</h2>
       <div *ngFor="let proposal of proposals" class="proposal-card">
-        <p><strong>{{ proposal.freelancer.name }}</strong></p>
+        <p><strong>{{ proposal.freelancer?.name }}</strong></p>
         <p>Price: ${{ proposal.price }}</p>
         <p>Status: {{ proposal.status }}</p>
         <button *ngIf="proposal.status === 'pending'" (click)="acceptProposal(proposal.id)">

@@ -13,9 +13,14 @@
       <div class="card-content">
         <div class="card-top">
           <h3 *ngIf="p.job">{{ p.job.title }}</h3>
-          <span class="status-badge status-{{ p.status }}">{{ p.status }}</span>
+          <span class="status-badge status-{{ p.status }}">
+            Proposal: {{ p.status }}
+          </span>
+          <span class="status-badge status-{{ p.job?.status }}" *ngIf="p.job?.status">
+            Job: {{ p.job.status }}
+          </span>
         </div>
-        <p class="cover-letter">{{ p.cover_letter }}</p>
+        <p class="cover-letter">{{ p.cover_letter || p.message }}</p>
         <p class="price">Your bid: ${{ p.price }}</p>
       </div>
       <div class="card-actions">

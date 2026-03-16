@@ -13,10 +13,11 @@ export interface Proposal {
     rating_avg: number;
   };
   job: {
-    id: number;
-    title: string;
-    budget: number;
-  };
+  id: number;
+  title: string;
+  budget: number;
+  status: string;
+};
   price: number;
   cover_letter: string;
   status: 'pending' | 'accepted' | 'rejected';
