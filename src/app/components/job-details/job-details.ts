@@ -21,17 +21,14 @@ export class JobDetailsComponent implements OnInit {
   currentUserId: string | null = null;
   isJobOwner = false;
 
-  // For submitting proposal
   proposalForm = {
     price: '',
     cover_letter: ''
   };
   isSubmittingProposal = false;
 
-  // For completing job
   isCompleting = false;
 
-  // For review
   reviewForm = {
     rating: '',
     comment: ''
@@ -50,6 +47,10 @@ export class JobDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.getCurrentUser();
+  }
+
+  get isFreelancer(): boolean {
+    return !!this.job?.freelancer && String(this.job.freelancer.id) === String(this.currentUserId);
   }
 
   getCurrentUser() {
@@ -155,8 +156,9 @@ export class JobDetailsComponent implements OnInit {
     this.jobsService.completeJob(this.job.id).subscribe({
       next: () => {
         this.job.status = 'completed';
-        this.showReviewForm = true;
+        this.showReviewForm = false;
         this.isCompleting = false;
+        this.loadJob();
       },
       error: (err) => {
         this.errorMessage = err.error?.error || 'Failed to complete job';

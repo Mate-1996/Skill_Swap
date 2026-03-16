@@ -46,4 +46,8 @@
       </select>
     </label>
 
+    <button type="submit" [disabled]="isSubmitting">
+      {{ isSubmitting ? 'Creating...' : 'Post Job' }}
+    </button>
+  </form>
 </div>
